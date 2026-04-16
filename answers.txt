@@ -1,0 +1,13 @@
+**How could the “secure” server and client framework above be compromised?**
+
+Even though this framework uses RSA and SHA256, it can still be compromised because there is no real authentication during the public key exchange. 
+During the tunnel step, the client and server just trust whatever public key they receive. That means a man-in-the-middle attacker could intercept the 
+connection, replace the keys, and secretly read or change the communication. It is also vulnerable to replay attacks since there are no timestamps, nonces, 
+or session checks. On top of that, the protocol is very basic, so if someone sent malformed or unexpected data, the system would not have much protection against it.
+
+**How could you improve the framework?**
+
+The biggest improvement would be adding authentication for the public keys, such as certificates or digital signatures, so the client knows it is really
+talking to the correct server. That would help prevent man-in-the-middle attacks. I would also add timestamps or nonces to stop replay attacks, and improve 
+the socket protocol by using better message formatting like length headers. A stronger real-world improvement would be using TLS, since it already handles encryption, 
+authentication, and integrity in a much more secure way.
